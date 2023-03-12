@@ -1,0 +1,74 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-app
+  namespace: argocd
+spec:
+  destination:
+    namespace: my-app
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: overlays/dev
+    repoURL: https://github.com/my-org/my-repo.git
+    targetRevision: HEAD
+    kustomize:
+      images:
+        - name: my-image
+          newTag: dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+  # Add stg and prod overlays as additional resources
+  additionalResources:
+    - apiVersion: argoproj.io/v1alpha1
+      kind: Application
+      metadata:
+        name: my-app-stg
+        namespace: argocd
+      spec:
+        destination:
+          namespace: my-app
+          server: https://kubernetes.default.svc
+        project: default
+        source:
+          path: overlays/stg
+          repoURL: https://github.com/my-org/my-repo.git
+          targetRevision: HEAD
+          kustomize:
+            images:
+              - name: my-image
+                newTag: stg
+        syncPolicy:
+          automated:
+            prune: true
+            selfHeal: true
+          syncOptions:
+            - CreateNamespace=true
+    - apiVersion: argoproj.io/v1alpha1
+      kind: Application
+      metadata:
+        name: my-app-prod
+        namespace: argocd
+      spec:
+        destination:
+          namespace: my-app
+          server: https://kubernetes.default.svc
+        project: default
+        source:
+          path: overlays/prod
+          repoURL: https://github.com/my-org/my-repo.git
+          targetRevision: HEAD
+          kustomize:
+            images:
+              - name: my-image
+                newTag: prod
+        syncPolicy:
+          automated:
+            prune: true
+            selfHeal: true
+          syncOptions:
+            - CreateNamespace=true
