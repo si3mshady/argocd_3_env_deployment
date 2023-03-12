@@ -1,21 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: my-app
-  namespace: argocd
+  name: dev
+  namespace: dev
 spec:
   destination:
-    namespace: my-app
-    server: https://kubernetes.default.svc
+    namespace: dev
+    server: https://api.elliottarnold.com
   project: default
   source:
-    path: overlays/dev
-    repoURL: https://github.com/my-org/my-repo.git
+    path: overlay/dev
+    repoURL: https://github.com/si3mshady/argocd_3_env_deployment.git#dev
     targetRevision: HEAD
-    kustomize:
-      images:
-        - name: my-image
-          newTag: dev
+    # kustomize:
+    #   images:
+    #     - name: my-image
+    #       newTag: dev
   syncPolicy:
     automated:
       prune: true
@@ -27,21 +27,21 @@ spec:
     - apiVersion: argoproj.io/v1alpha1
       kind: Application
       metadata:
-        name: my-app-stg
-        namespace: argocd
+        name: stg
+        namespace: stg
       spec:
         destination:
-          namespace: my-app
-          server: https://kubernetes.default.svc
+          namespace: stg
+          server: https://api.elliottlamararnold.com
         project: default
         source:
           path: overlays/stg
-          repoURL: https://github.com/my-org/my-repo.git
+          repoURL: https://github.com/si3mshady/argocd_3_env_deployment.git#stg
           targetRevision: HEAD
-          kustomize:
-            images:
-              - name: my-image
-                newTag: stg
+          # kustomize:
+          #   images:
+          #     - name: my-image
+          #       newTag: stg
         syncPolicy:
           automated:
             prune: true
@@ -51,21 +51,21 @@ spec:
     - apiVersion: argoproj.io/v1alpha1
       kind: Application
       metadata:
-        name: my-app-prod
-        namespace: argocd
+        name: prod
+        namespace: prod
       spec:
         destination:
-          namespace: my-app
-          server: https://kubernetes.default.svc
+          namespace: prod
+          server: https://api.lamararnold.com
         project: default
         source:
           path: overlays/prod
-          repoURL: https://github.com/my-org/my-repo.git
+          repoURL: https://github.com/si3mshady/argocd_3_env_deployment.git#prod
           targetRevision: HEAD
-          kustomize:
-            images:
-              - name: my-image
-                newTag: prod
+          # kustomize:
+          #   images:
+          #     - name: my-image
+          #       newTag: prod
         syncPolicy:
           automated:
             prune: true
