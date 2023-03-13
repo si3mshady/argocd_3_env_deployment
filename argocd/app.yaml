@@ -2,15 +2,15 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: dev
-  # namespace: dev
+  namespace: argocd
 spec:
   project: dev
   source:
-    repoURL: https://github.com/si3mshady/argocd_3_env_deployment.git#dev
-    # targetRevision: dev
+    repoURL: https://github.com/si3mshady/argocd_3_env_deployment.git
+    targetRevision: HEAD
     path: overlay/dev
   destination:
-    server: https://api.elliottarnold.com
+    server: https://kubernetes.default.svc
     namespace: dev
   syncPolicy:
     automated:
@@ -25,15 +25,15 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: stg
-  # namespace: stg
+  namespace: argocd
 spec:
   project: default
   source:
-    repoURL: https://github.com/si3mshady/argocd_3_env_deployment.git#stg
-    # targetRevision: stg
+    repoURL: https://github.com/si3mshady/argocd_3_env_deployment.git
+    targetRevision: HEAD
     path: overlay/stg
   destination:
-    server: https://api.elliottlamararnold.com
+    server: https://kubernetes.default.svc
     namespace: stg
   syncPolicy:
     automated:
@@ -48,15 +48,15 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: prod
-  # namespace: prod
+  namespace: argocd
 spec:
   project: prod
   source:
-    repoURL: https://github.com/si3mshady/argocd_3_env_deployment.git#prod
-    # targetRevision: prod
+    repoURL: https://github.com/si3mshady/argocd_3_env_deployment.git
+    targetRevision: HEAD
     path: overlay/prod
   destination:
-    server: https://api.lamararnold.com
+    server: https://kubernetes.default.svc
     namespace: prod
   syncPolicy:
     automated:
