@@ -2,73 +2,65 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: dev
-  namespace: dev
+  # namespace: dev
 spec:
-  destination:
-    namespace: dev
-    server: https://api.elliottarnold.com
-  project: default
+  project: dev
   source:
-    path: overlay/dev
     repoURL: https://github.com/si3mshady/argocd_3_env_deployment.git#dev
-    targetRevision: HEAD
-    # kustomize:
-    #   images:
-    #     - name: my-image
-    #       newTag: dev
+    # targetRevision: dev
+    path: overlay/dev
+  destination:
+    server: https://api.elliottarnold.com
+    namespace: dev
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-  # Add stg and prod overlays as additional resources
-  additionalResources:
-    - apiVersion: argoproj.io/v1alpha1
-      kind: Application
-      metadata:
-        name: stg
-        namespace: stg
-      spec:
-        destination:
-          namespace: stg
-          server: https://api.elliottlamararnold.com
-        project: default
-        source:
-          path: overlays/stg
-          repoURL: https://github.com/si3mshady/argocd_3_env_deployment.git#stg
-          targetRevision: HEAD
-          # kustomize:
-          #   images:
-          #     - name: my-image
-          #       newTag: stg
-        syncPolicy:
-          automated:
-            prune: true
-            selfHeal: true
-          syncOptions:
-            - CreateNamespace=true
-    - apiVersion: argoproj.io/v1alpha1
-      kind: Application
-      metadata:
-        name: prod
-        namespace: prod
-      spec:
-        destination:
-          namespace: prod
-          server: https://api.lamararnold.com
-        project: default
-        source:
-          path: overlays/prod
-          repoURL: https://github.com/si3mshady/argocd_3_env_deployment.git#prod
-          targetRevision: HEAD
-          # kustomize:
-          #   images:
-          #     - name: my-image
-          #       newTag: prod
-        syncPolicy:
-          automated:
-            prune: true
-            selfHeal: true
-          syncOptions:
-            - CreateNamespace=true
+
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: stg
+  # namespace: stg
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/si3mshady/argocd_3_env_deployment.git#stg
+    # targetRevision: stg
+    path: overlay/stg
+  destination:
+    server: https://api.elliottlamararnold.com
+    namespace: stg
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prod
+  # namespace: prod
+spec:
+  project: prod
+  source:
+    repoURL: https://github.com/si3mshady/argocd_3_env_deployment.git#prod
+    # targetRevision: prod
+    path: overlay/prod
+  destination:
+    server: https://api.lamararnold.com
+    namespace: prod
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
