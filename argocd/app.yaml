@@ -4,7 +4,7 @@ metadata:
   name: dev
   namespace: argocd
 spec:
-  project: dev
+  project: default
   source:
     repoURL: https://github.com/si3mshady/argocd_3_env_deployment.git
     targetRevision: HEAD
@@ -50,7 +50,7 @@ metadata:
   name: prod
   namespace: argocd
 spec:
-  project: prod
+  project: default
   source:
     repoURL: https://github.com/si3mshady/argocd_3_env_deployment.git
     targetRevision: HEAD
